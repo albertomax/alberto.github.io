@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+<head>
+<link rel="stylesheet" type="text/css" href="base.css" />
+<link rel="stylesheet" type="text/css" href="exe_highlighter.css" />
+<link rel="stylesheet" type="text/css" href="content.css" />
+<link rel="stylesheet" type="text/css" href="nav.css" />
+<meta http-equiv="content-type" content="text/html;  charset=utf-8" />
+<title> Generar una imagen personalizada de MAX a partir de la ISO original </title>
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<meta name="author" content="Alberto Vinagrero" />
+<link rel="license" type="text/html" href="http://creativecommons.org/licenses/by-sa/4.0/" />
+<meta name="generator" content="eXeLearning 2.8.1 - exelearning.net" />
+<meta name="description" content="Descripción de un sencillo método para generar imágenes autoarrancables de MAX adaptadas a nuestras necesidades." />
+<!--[if lt IE 9]><script type="text/javascript" src="exe_html5.js"></script><![endif]-->
+<script type="text/javascript" src="exe_jquery.js"></script>
+<script type="text/javascript" src="exe_highlighter.js"></script>
+<script type="text/javascript" src="common_i18n.js"></script>
+<script type="text/javascript" src="common.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+<body class="exe-web-site" id="exe-node-0"><script type="text/javascript">document.body.className+=" js"</script>
+<div id="content">
+<p id="skipNav"><a href="#main" class="sr-av">Saltar la navegación</a></p>
+<header id="header" ><div id="headerContent"> Generar una imagen personalizada de MAX a partir de la ISO original</div></header>
+<nav id="siteNav">
+<ul>
+   <li id="active"><a href="index.html" class="active daddy main-node">Generar una imagen personalizada de MAX a partir de la ISO original</a></li>
+   <li><a href="documentacin.html" class="no-ch">Documentación</a></li>
+</ul>
+</nav>
+<div id='topPagination'>
+<nav class="pagination noprt">
+<a href="documentacin.html" class="next"><span>Siguiente<span> &raquo;</span></span></a>
+</nav>
+</div>
+<div id="main-wrapper">
+<section id="main">
+<header id="nodeDecoration"><h1 id="nodeTitle">Generar una imagen personalizada de MAX a partir de la ISO original</h1></header>
+<article class="iDevice_wrapper textIdevice" id="id0">
+<div class="iDevice emphasis0" >
+<div id="ta0_2586_2" class="block iDevice_content">
+<div class="exe-text"><p>En ocasiones tenemos que instalar MAX en equipos que equipos con hardware muy nuevo o muy específico y que solo está soportado por núcleos del kernel más modernos que el original de la instalación de MAX. O queremos que nuestra imagen para instalar MAX en nuestros equipos incluya un software adicional o no queremos que se instale un software que MAX incluye por defecto.</p>
+<p>Podemos resolver este problema siguiendo las explicaciones que a continuación vamos a dar. En concreto, nos centraremos en la instalación de una versión del kernel superior, pero el método es fácilmente adaptable a la adición o eliminación de software a nuestra imagen.</p>
+<h1>Instalación del software necesario</h1>
+<p>Para modificar la imagen o ISO de MAX vamos a utilizar un software especial llamado <a href="https://github.com/PJ-Singh-001/Cubic" target="_blank" title="Cubic (Custom Ubuntu ISO Creator) | Home page" rel="noopener">Cubic</a> (Custom Ubuntu ISO Creator), que no se encuentra incluido en los repositorios de MAX. Por lo tanto, para poder instalarlo, tenemos que añadir a los repositorios de nuestro equipo el servidor correspondiente en Launchpad, actualizarlos e instalar Cubic (debemos aceptar todo):</p>
+<div class="highlighted-code code-style-2 language-markup">
+<div>
+<pre><code>sudo apt-add-repository ppa:cubic-wizard/release
+sudo apt update
+sudo apt install cubic</code></pre>
+</div>
+</div>
+<p>Ya tenemos instalado Cubic.</p>
+<h1>Creación de una imagen adaptada</h1>
+<p>Una vez concluido el proceso podemos ejecutar el programa desde el menú: <em>Inicio -&gt; Herramientas del sistema -&gt; Cubic</em> (nos pedirá la contraseña de madrid para poder ejecutarlo)</p>
+<p><img src="MenuCubic.png" alt="LAnzador de Cubic desde el menú" style="display: block; margin-left: auto; margin-right: auto;" width="400" height="355" /></p>
+<p>En la ventana que nos aparece creamos la carpeta en la que queremos que se ubique nuestro proyecto, con todos los archivos necesarios y la imagen que se genere. Es importante prever que se va a ocupar mucho espacio (varias Gigas de datos) de disco.</p>
+<p><img src="InicioCubic.png" alt="Creación del directorio del proyecto" title="Creación del directorio del proyecto" style="display: block; margin: 30px auto 30px auto;" width="599" height="420" />Debemos hacer clic en el botón azul (Next&gt;) de la esquina superior derecha de la ventana.</p>
+<p>En al siguiente ventana, en el campo Filename de la columna izquierda de la nueva ventana debemos elegir la imagen original (que podemos <a href="https://external.educa2.madrid.org/web/max/#descargas" target="_blank" title="Descargas de MAX" rel="noopener">descargar</a> desde la web de MAX) en la que nos queremos basar para desarrollar nuestro proyecto. En la columna de la derecha se pueden personalizar algunos campos para nombrar y diferenciar nuestra imagen.</p>
+<p><img src="SeleccioISOOrigen.png" alt="Selección de la ISO de origen" style="margin: 30px auto; display: block;" width="600" height="419" /></p>
+<p>A continuación, tras hacer clic en el botón de Next&gt; que aparece en la parte superior derecha de la ventana, el programa procede a analizar y descomprimir la ISO que le hemos indicado en un proceso que tardará más o menos en función de la capacidad de nuestro equipo.</p>
+<p>Tras la espera nos aparecerá una nueva ventana en la que trabajaremos «dentro» del entorno que se ha generado al descomprimir la imagen ISO. Es un entorno aislado del resto de nuestro equipo que se conoce como <em>chroot</em>. Por esta razón, aunque vayamos a realizar operaciones de administración del sistema, no va a ser necesario preceder nuestras instrucciones del <code>sudo</code> habitual.</p>
+<p>Aquí es donde haremos los cambios relacionados con la incorporación o eliminación de nuevos paquetes a «nuestra» distribución. Recuerdo que nuestro ejemplo consiste en incluir un kernel superior al que ya trae la versión de MAX. </p>
+<p>En primer lugar actualizaremos el sistema</p>
+<div class="highlighted-code code-style-2 language-markup">
+<div>
+<pre><code>apt update
+apt dist-upgrade</code></pre>
+</div>
+</div>
+<p>Salvo que estemos seguros de lo contrario, aceptaremos todas las preguntas que nos pueda hacer durante el proceso. Con ello, nuestra nueva imagen tendrá actualizado todo el sistema.</p>
+<p>A continuación procedemos a instalar el kernel deseado. Para ello seguimos las instrucciones que mencionamos más atrás de un <a href="https://external.educa2.madrid.org/web/max/kernel" target="_blank" title="Subir de Kernel MAX10 | +Trucos" rel="noopener">Truco</a> de MAX.</p>
+<div class="highlighted-code code-style-2 language-markup">
+<div>
+<pre><code>apt install --install-recommends linux-generic-hwe-20.04 xserver-xorg-hwe-18.04</code></pre>
+</div>
+</div>
+<p>Con estas instrucciones instalamos la versión del kernel 5.13.X.X y los driver de gráficos correspondientes.</p>
+<p>De esta forma, también podemos instalar los programas que queramos que aparezcan en nuestra versión adaptada y quitar aquellos que consideremos innecesarios (atención a las dependencias que podamos romper). Por ejemplo, la siguiente instrucción dará lugar a una imagen que incluya el programa de diseño de interiores Sweet Home 3d (que ya se podrá ejecutar en la versión live).</p>
+<div class="highlighted-code code-style-2 language-markup">
+<div>
+<pre><code>apt install sweethome3d</code></pre>
+</div>
+</div>
+<p>Una vez que hayamos terminado este proceso de instalaciones y/o desinstalaciones pasaremos a la siguiente fase del proceso haciendo clic en el botón de Next&gt; que aparece en la parte superior derecha de la ventana. Deberemos esperar un momento a que el programa haga las comprobaciones y modificaciones necesarias.</p>
+<p>En la nueva ventana podemos elegir aquellos programas que queremos que, tras la instalación se desinstalen. Es decir, podemos instalar programas que solo aparezcan en la versión «live», pero que al instalarse en el ordenador desaparezcan. Si es el caso, marcamos la casilla correspondiente a esos programas que no queremos que se instalen en el ordenador pero si estén en la versión live. Hay que tener mucha precaución con las posibles dependencias que se dejen de cumplir con estas eliminaciones. En nuestro ejemplo no queremos eliminar ningún programa, así que hacemos clic directamente en el botón de Next&gt; que aparece en la parte superior derecha de la ventana.</p>
+<p><img src="EliminacionProgramas.png" alt="Ventana para eliminar programas tras la instalación" style="margin: 30px auto; display: block;" width="600" height="420" />La siguiente ventana tiene tres pestañas, pero la más importante para nuestro ejemplo es la primera, titulada Kernel, en la que podemos elegir el kernel que se cargará en la versión «live». Las otras dos, no nos interesan. Sirven para cambiar algunos aspectos de la instalación, como selección de idioma, teclado, etc.</p>
+<p>En nuestro caso, marcamos la versión del kernel que hemos instalado, para que se reconozca el hardware más moderno, como buscábamos en un origen.</p>
+<p><img src="SeleccionKernel.png" alt="Ventana para seleccionar el kernel a cargar en la versión «live»" style="display: block; margin: 30px auto 30px auto;" width="601" height="422" />Pero, en general, podemos dejar estas tres pestañas sin modificar nada y hacer clic en el botón de Next&gt; que aparece en la parte superior derecha de la ventana.</p>
+<p>Por último, podemos elegir el grado de compresión con que queremos que se genere nuestra imagen. Lógicamente, a mayor compresión mayor tiempo de proceso, en una progresión que es exponencial. Es una buena opción elegir la que nos ofrece por defecto, gzip.</p>
+<p><img src="NivelCompresion.png" alt="Nivel de compresión" style="display: block; margin: 30px auto 30px auto;" width="600" height="423" />Al hacer clic en el botón azul de la parte superior de la ventana se procederá a generar la imagen ISO de nuestro sistema adaptado, proceso que suele prolongarse durante un tiempo que dependerá de la potencia de nuestro equipo.</p>
+<p>Al finalizar el proceso encontraremos la imagen ISO generada en el directorio que creamos al principio de todo el proceso. Podremos instalarla en un pendrive para su posterior utilización siguiendo las <a href="https://max.educa.madrid.org/manual/max11/crear_un_usb_autoarrancable.html" target="_blank" title="Crear un USB autoarrancable" rel="noopener">instrucciones</a> que para ello encontramos en el manual de MAX.</p>
+<h1>Información relacionada</h1>
+<ul>
+<li><a href="https://external.educa2.madrid.org/web/max/kernel">https://external.educa2.madrid.org/web/max/kernel</a>: documentación sobre el proceso de modernizar la versión del kernel en MAX.</li>
+<li><a href="https://github.com/PJ-Singh-001/Cubic">https://github.com/PJ-Singh-001/Cubic</a>: página web del proyecto Cubic, esencial para la realización del proceso.</li>
+<li><a href="https://linuxhint.com/customize_ubuntu_iso_create_spin/" target="_blank" rel="noopener">https://linuxhint.com/customize_ubuntu_iso_create_spin/</a>: página de la que he sacado la idea para este tutorial.</li>
+<li><a href="https://max.educa.madrid.org/manual/max11/trabajar_desde_un_dispositivo_usb_en_modo_live.html">https://max.educa.madrid.org/manual/max11/trabajar_desde_un_dispositivo_usb_en_modo_live.html</a>: información para grabar una imagen de arranque en USB desde MAX.</li>
+</ul>
+<p><a href="https://external.educa2.madrid.org/web/max/kernel"></a></p>
+<p></p></div>
+</div>
+</div>
+</article>
+<div id="packageLicense" class="cc cc-by-sa">
+<p><span>Obra publicada con</span> <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Reconocimiento Compartir igual 4.0</a></p>
+</div>
+</section>
+</div>
+<div id='bottomPagination'>
+<nav class="pagination noprt">
+<a href="documentacin.html" class="next"><span>Siguiente<span> &raquo;</span></span></a>
+</nav>
+</div>
+</div>
+<p id="made-with-eXe"><a href="https://exelearning.net/" target="_blank" rel="noopener"><span>Creado con eXeLearning<span> (Ventana nueva)</span></span></a></p><div id="emHeader"><p><a href="https://www.educa2.madrid.org/web/max/" target="_blank" rel="noopener" id="emMAX"><span>MAX: MAdrid_linuX</span></a> <a href="http://www.educa.madrid.org/" target="_blank" rel="noopener"><span>EducaMadrid</span></a></p></div><script type="text/javascript" src="_style_js.js"></script></body></html>
